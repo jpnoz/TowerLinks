@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 
@@ -25,23 +26,11 @@ public class TileDataEditor : Editor
 {
     SerializedProperty tileType;
     SerializedProperty tileMoveDirection;
-    SerializedProperty baseTileMaterial;
-    SerializedProperty enemyTileMaterial;
-    SerializedProperty spawnTileMaterial;
-    SerializedProperty goalTileMaterial;
-    SerializedProperty baseWalkDirectionMaterial;
-    SerializedProperty spawnWalkDirectionMaterial;
 
     private void OnEnable()
     {
         tileType = serializedObject.FindProperty("tileType");
         tileMoveDirection = serializedObject.FindProperty("tileMoveDirection");
-        baseTileMaterial = serializedObject.FindProperty("baseTileMaterial");
-        enemyTileMaterial = serializedObject.FindProperty("enemyTileMaterial");
-        spawnTileMaterial = serializedObject.FindProperty("spawnTileMaterial");
-        goalTileMaterial = serializedObject.FindProperty("goalTileMaterial");
-        baseWalkDirectionMaterial = serializedObject.FindProperty("baseWalkDirectionMaterial");
-        spawnWalkDirectionMaterial = serializedObject.FindProperty("spawnWalkDirectionMaterial");
     }
 
     public override void OnInspectorGUI()
@@ -55,30 +44,25 @@ public class TileDataEditor : Editor
             EditorGUILayout.PropertyField(tileMoveDirection);
         }
 
-        EditorGUILayout.PropertyField(baseTileMaterial);
-        EditorGUILayout.PropertyField(enemyTileMaterial);
-        EditorGUILayout.PropertyField(spawnTileMaterial);
-        EditorGUILayout.PropertyField(goalTileMaterial);
-        EditorGUILayout.PropertyField(baseWalkDirectionMaterial);
-        EditorGUILayout.PropertyField(spawnWalkDirectionMaterial);
-
         serializedObject.ApplyModifiedProperties();
     }
 }
 
+[SelectionBase]
 [ExecuteInEditMode]
 public class TileData : MonoBehaviour
 {
+    public Vector2Int tilePosition = Vector2Int.zero;
     public TileType tileType;
     public TileMoveDirection tileMoveDirection;
 
-    [SerializeField] Material baseTileMaterial;
-    [SerializeField] Material enemyTileMaterial;
-    [SerializeField] Material spawnTileMaterial;
-    [SerializeField] Material goalTileMaterial;
-    [SerializeField] Material baseWalkDirectionMaterial;
-    [SerializeField] Material spawnWalkDirectionMaterial;
+    BoardGenerator boardGenerator;
+    bool wasModified = false;
 
+    void Awake()
+    {
+        boardGenerator = GetComponentInParent<BoardGenerator>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -86,57 +70,78 @@ public class TileData : MonoBehaviour
         
     }
 
+    private void OnValidate()
+    {
+        wasModified = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (!EditorApplication.isPlaying)
+        if (wasModified)
         {
-            DisplayTileData();
+            DisplayTile();
+            DisplayTileDirection();
+            wasModified = false;
         }
     }
 
-    void DisplayTileData()
+    void DisplayTile()
     {
-        MeshRenderer renderer = GetComponent<MeshRenderer>();
-        
-        if (renderer == null)
+        if (!boardGenerator)
         {
-            return;
+            return; 
         }
 
+        // Set child Prefab to match currently set Tile Type
+        if (transform.childCount > 0)
+        {
+            BoardCleanup.DestroyOnUpdate.Add(transform.GetChild(0).gameObject);
+        }
+
+        GameObject newTilePrefab = boardGenerator.baseTilePrefab;
         switch (tileType)
         {
             case TileType.EnemySpawn:
-                renderer.sharedMaterial = spawnWalkDirectionMaterial;
+                newTilePrefab = boardGenerator.enemySpawnTilePrefab;
                 break;
             case TileType.EnemyWalkable:
-                renderer.sharedMaterial = baseWalkDirectionMaterial;
+                newTilePrefab = boardGenerator.enemyWalkTilePrefab;
                 break;
             case TileType.EnemyGoal:
-                renderer.sharedMaterial = goalTileMaterial;
-                break;
-            default:
-                renderer.sharedMaterial = baseTileMaterial;
+                newTilePrefab = boardGenerator.enemyGoalTilePrefab;
                 break;
         }
 
+        Quaternion newTileRotation = Quaternion.identity;
         if (tileType == TileType.EnemySpawn || tileType == TileType.EnemyWalkable)
         {
             switch (tileMoveDirection)
             {
                 case TileMoveDirection.PositiveZ:
-                    transform.rotation = Quaternion.identity;
+                    newTileRotation = Quaternion.identity;
                     break;
                 case TileMoveDirection.PositiveX:
-                    transform.rotation = Quaternion.Euler(0, 90, 0);
+                    newTileRotation = Quaternion.Euler(0, 90, 0);
                     break;
                 case TileMoveDirection.NegativeZ:
-                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    newTileRotation = Quaternion.Euler(0, 180, 0);
                     break;
                 case TileMoveDirection.NegativeX:
-                    transform.rotation = Quaternion.Euler(0, -90, 0);
+                    newTileRotation = Quaternion.Euler(0, -90, 0);
                     break;
             }
         }
+        GameObject.Instantiate(newTilePrefab, transform.position, newTileRotation, transform);
+    }
+
+    void DisplayTileDirection()
+    {
+        if (transform.childCount == 0)
+        {
+            return;
+        }
+
+        
     }
 }

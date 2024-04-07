@@ -9,10 +9,20 @@ public class BoardGenerator : MonoBehaviour
 {
     [SerializeField] int boardWidth = 20;
     [SerializeField] int boardHeight = 20;
+    [SerializeField] float boardSpacing = 0.1f;
+
     // Controls how the board expands and contracts when changing sizes
     // If true, board will expand around center instead of around the origin 
     [SerializeField] bool centerExpand = false;
-    [SerializeField] GameObject tilePrefab;
+
+    [SerializeField] GameObject editableTilePrefab;
+
+    // Prefabs for each Tile Type
+    public GameObject baseTilePrefab;
+    public GameObject enemySpawnTilePrefab;
+    public GameObject enemyWalkTilePrefab;
+    public GameObject enemyGoalTilePrefab;
+
     GameObject[,] board;
 
     // Start is called before the first frame update
@@ -37,16 +47,14 @@ public class BoardGenerator : MonoBehaviour
             board = new GameObject[boardHeight, boardWidth];
 
             // Reattach any remaining children
-            for (int y = 0; y < boardHeight; y++)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                for (int x = 0; x < boardWidth; x++)
+                GameObject targetTile = transform.GetChild(i).gameObject;
+                TileData targetTileData = targetTile.GetComponent<TileData>();
+                if (board[targetTileData.tilePosition.y, targetTileData.tilePosition.x] == null)
                 {
-                    GameObject targetTile = GameObject.Find($"({x}, {y})");
-                    if (targetTile != null && board[y, x] == null)
-                    {
-                        board[y, x] = targetTile;
-                        Debug.Log($"({x}, {y}) reattached");
-                    }
+                    board[targetTileData.tilePosition.y, targetTileData.tilePosition.x] = targetTile;
+                    Debug.Log($"({targetTileData.tilePosition.x}, {targetTileData.tilePosition.y}) reattached");
                 }
             }
         }
@@ -55,6 +63,7 @@ public class BoardGenerator : MonoBehaviour
             board = CenterExistingBoard(board, boardWidth, boardHeight);
         }
 
+        // Fill remaining spots with new Tiles
         for (int y = 0; y < board.GetLength(0); y++)
         {
             for (int x = 0; x < board.GetLength(1); x++)
@@ -69,7 +78,8 @@ public class BoardGenerator : MonoBehaviour
 
     GameObject InstantiateNewTile(int x, int y)
     {
-        GameObject newTile = GameObject.Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, transform);
+        GameObject newTile = GameObject.Instantiate(editableTilePrefab, new Vector3(x, 0, y) * (1 + boardSpacing), Quaternion.identity, transform);
+        newTile.GetComponent<TileData>().tilePosition = new Vector2Int(x, y);
         newTile.name = $"({x}, {y})";
 
         return newTile;
@@ -125,7 +135,8 @@ public class BoardGenerator : MonoBehaviour
                 if (newBoard[y, x] != null)
                 {
                     newBoard[y, x].name = $"({x}, {y})";
-                    newBoard[y, x].transform.position = new Vector3(x, 0, y);
+                    newBoard[y, x].GetComponent<TileData>().tilePosition = new Vector2Int(x, y);
+                    newBoard[y, x].transform.position = new Vector3(x, 0, y) * (1 + boardSpacing);
                 }
             }
         }
