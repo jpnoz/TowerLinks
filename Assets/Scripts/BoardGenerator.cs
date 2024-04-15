@@ -7,9 +7,9 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class BoardGenerator : MonoBehaviour
 {
-    [SerializeField] int boardWidth = 20;
-    [SerializeField] int boardHeight = 20;
-    [SerializeField] float boardSpacing = 0.1f;
+    public int boardWidth = 20;
+    public int boardHeight = 20;
+    public float boardSpacing = 0.1f;
 
     // Controls how the board expands and contracts when changing sizes
     // If true, board will expand around center instead of around the origin 
@@ -54,7 +54,6 @@ public class BoardGenerator : MonoBehaviour
                 if (board[targetTileData.tilePosition.y, targetTileData.tilePosition.x] == null)
                 {
                     board[targetTileData.tilePosition.y, targetTileData.tilePosition.x] = targetTile;
-                    Debug.Log($"({targetTileData.tilePosition.x}, {targetTileData.tilePosition.y}) reattached");
                 }
             }
         }

@@ -16,11 +16,6 @@ public class BoardCleanup : MonoBehaviour
     // Update is called once per frame
     public static void DestroyMarkedObjects()
     {
-        if (EditorApplication.isPlaying)
-        {
-            return;
-        }
-
         foreach (GameObject go in DestroyOnUpdate)
         {
             DestroyImmediate(go);

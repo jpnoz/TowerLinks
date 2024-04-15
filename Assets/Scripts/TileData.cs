@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -55,6 +56,7 @@ public class TileData : MonoBehaviour
     public Vector2Int tilePosition = Vector2Int.zero;
     public TileType tileType;
     public TileMoveDirection tileMoveDirection;
+    public GameObject nextTile = null;
 
     BoardGenerator boardGenerator;
     bool wasModified = false;
@@ -67,7 +69,16 @@ public class TileData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // If enemies can walk on the tile,
+        // get the next tile in the path through a raycast
+        if (tileType == TileType.EnemySpawn || tileType == TileType.EnemyWalkable)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.GetChild(0).forward * (1 + boardGenerator.boardSpacing), out hit))
+            {
+                nextTile = hit.transform.parent.parent.gameObject;
+            }
+        }
     }
 
     private void OnValidate()
@@ -81,7 +92,7 @@ public class TileData : MonoBehaviour
         if (wasModified)
         {
             DisplayTile();
-            DisplayTileDirection();
+            UpdateTileScripts();
             wasModified = false;
         }
     }
@@ -135,13 +146,36 @@ public class TileData : MonoBehaviour
         GameObject.Instantiate(newTilePrefab, transform.position, newTileRotation, transform);
     }
 
-    void DisplayTileDirection()
+    void UpdateTileScripts()
     {
-        if (transform.childCount == 0)
+        switch (tileType)
         {
-            return;
+            case TileType.TurretPlaceable:
+                ClearTileScripts();
+                break;
+            case TileType.EnemySpawn:
+                if (!GetComponent<EnemySpawner>())
+                {
+                    ClearTileScripts();
+                    gameObject.AddComponent<EnemySpawner>();
+                }
+                break;
+            case TileType.EnemyWalkable:
+                ClearTileScripts();
+                break;
+            case TileType.EnemyGoal:
+                ClearTileScripts();
+                break;
         }
+    }
 
-        
+    void ClearTileScripts()
+    {
+        EnemySpawner enemySpawner = GetComponent<EnemySpawner>();
+
+        if (enemySpawner)
+        {
+            Destroy(enemySpawner);
+        }
     }
 }
