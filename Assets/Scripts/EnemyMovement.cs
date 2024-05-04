@@ -58,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + transform.up, -2 * transform.up, out hit))
+        if (Physics.Raycast(transform.position, -(1 + movementElevation) * transform.up, out hit))
         {
             TileData currentTileData = hit.transform.GetComponentInParent<TileData>();
 

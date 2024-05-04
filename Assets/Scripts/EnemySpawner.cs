@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
         currentSpawnTime -= Time.deltaTime;
         if (currentSpawnTime < 0)
         {
-            GameObject.Instantiate(enemyToSpawn, transform.position + Vector3.up * 0.5f, transform.GetChild(0).rotation);
+            GameObject.Instantiate(enemyToSpawn, transform.position + Vector3.up * 0.501f, transform.GetChild(0).rotation);
             currentSpawnTime = spawnTime;
             currentSpawnCount--;
         }
