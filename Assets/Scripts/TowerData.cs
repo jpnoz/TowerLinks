@@ -9,23 +9,38 @@ public enum TowerType
     BoostTower,
 }
 
+[RequireComponent(typeof(TowerStats))]
 public class TowerData : MonoBehaviour
 {
     public TowerType towerType;
     public int maxConnections = 3;
-    public List<GameObject> connectedTowers;
-    public StatBoost outgoingStatBoost;
-    public StatBoost incomingStatBoost;
+    public List<TowerData> connectedTowers;
+    public TowerStats towerStats;
+    StatBoost currentStatBoost;
 
     // Start is called before the first frame update
     void Start()
     {
-        connectedTowers = new List<GameObject>();
+        connectedTowers = new List<TowerData>();
+        towerStats = GetComponent<TowerStats>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void ConnectTower(TowerData connectingTowerData)
+    {
+        connectedTowers.Add(connectingTowerData);
+
+        currentStatBoost = new StatBoost();
+        foreach (TowerData towerData in connectedTowers)
+        {
+            currentStatBoost += TowerStats.getStatBoost(towerType, towerData.towerType);
+        }
+
+        towerStats.applyStatBoost(currentStatBoost);
     }
 }
