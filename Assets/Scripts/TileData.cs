@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public enum TileMoveDirection
@@ -151,31 +152,31 @@ public class TileData : MonoBehaviour
         switch (tileType)
         {
             case TileType.TurretPlaceable:
-                ClearTileScripts();
+                ClearTileDataScripts();
                 break;
             case TileType.EnemySpawn:
                 if (!GetComponent<EnemySpawner>())
                 {
-                    ClearTileScripts();
+                    ClearTileDataScripts();
                     gameObject.AddComponent<EnemySpawner>();
                 }
                 break;
             case TileType.EnemyWalkable:
-                ClearTileScripts();
+                ClearTileDataScripts();
                 break;
             case TileType.EnemyGoal:
-                ClearTileScripts();
+                ClearTileDataScripts();
                 break;
         }
     }
 
-    void ClearTileScripts()
+    void ClearTileDataScripts()
     {
-        EnemySpawner enemySpawner = GetComponent<EnemySpawner>();
+        EnemySpawner enemySpawnerData = GetComponent<EnemySpawner>();
 
-        if (enemySpawner)
+        if (enemySpawnerData)
         {
-            Destroy(enemySpawner);
+            DestroyImmediate(enemySpawnerData);
         }
     }
 }

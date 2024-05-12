@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class CapsuleHealth : MonoBehaviour
 {
-    public int maxHealth = 100; // Maximum health of the capsule
-    private int currentHealth; // Current health of the capsule
+    public int maxHealth = 100;
+    private int currentHealth;
+
+    // Event that will be invoked when the capsule is destroyed
+    public static event Action<int> OnCapsuleDestroyed;
 
     void Start()
     {
@@ -16,8 +18,7 @@ public class CapsuleHealth : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount; // Reduce health by the damage amount
-        Debug.Log("enemy health: " + currentHealth); // Debug log to show current health
-
+        Debug.Log("Enemy health: " + currentHealth); // Debug log to show current health
 
         if (currentHealth <= 0)
         {
@@ -30,5 +31,7 @@ public class CapsuleHealth : MonoBehaviour
     {
         Debug.Log("Enemy Destroyed"); // Debug log to indicate capsule destruction
         Destroy(gameObject); // Destroy the capsule GameObject
+
+        OnCapsuleDestroyed?.Invoke(10); // Deposit 10 coins per destroyed capsule
     }
 }

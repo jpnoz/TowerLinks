@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Laser : MonoBehaviour
 {
+    public string targetTag = "Enemy";
     public int damage = 25; // Amount of damage the cannonball deals
 
     private void OnTriggerEnter(Collider other)
     {
         // Check if the cannonball collides with a capsule
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag(targetTag))
         {
             CapsuleHealth capsuleHealth = other.GetComponent<CapsuleHealth>(); // Get the CapsuleHealth component
 
