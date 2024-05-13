@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,6 +6,8 @@ public class BoardGenerator : MonoBehaviour
     public int boardWidth = 20;
     public int boardHeight = 20;
     public float boardSpacing = 0.1f;
+
+    public Transform cameraPivot;
 
     // Controls how the board expands and contracts when changing sizes
     // If true, board will expand around center instead of around the origin 
@@ -28,7 +26,7 @@ public class BoardGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -73,6 +71,11 @@ public class BoardGenerator : MonoBehaviour
                 }
             }
         }
+
+        // Adjust Camera Pivot to new center of board
+        float pivotX = (1 + boardSpacing) * ((boardWidth / 2) - 0.5f);
+        float pivotZ = (1 + boardSpacing) * ((boardHeight / 2) - 0.5f);
+        cameraPivot.position = new Vector3(pivotX, 0, pivotZ);
     }
 
     GameObject InstantiateNewTile(int x, int y)
