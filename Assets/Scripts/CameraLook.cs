@@ -12,18 +12,20 @@ public class CameraLook : MonoBehaviour
     public bool invertZoomControl = false;
 
     //Set variables for camera zoom
-    public float distFromTarget = 5;
+    float distFromTarget = 5;
     public float zoomIncrement = 0.5f;
     public Vector2 zoomLimit = new Vector2(5, 30);
 
     //Set variables for clamping pitch (x-axis rotation)
-    public Vector2 pitchLimit = new Vector2(-45, 60);
+    public Vector2 pitchLimit = new Vector2(0, 89);
     float pitch;
     float yaw;
 
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
+        distFromTarget = (zoomLimit.x + zoomLimit.y) / 2.0f;
+        pitch = 45;
+        RotateCamera();
     }
 
     //Adjust camera position after other objects have moved in the Update method

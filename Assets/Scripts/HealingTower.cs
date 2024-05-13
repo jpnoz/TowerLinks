@@ -25,7 +25,7 @@ public class HealingTower : MonoBehaviour
             bool towersInRange = false; // Flag to track if towers are within range
 
             // Find all towers with the "DefaultTower" tag within the healRange
-            GameObject[] towers = GameObject.FindGameObjectsWithTag("DefaultTower");
+            GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
 
             foreach (GameObject towerObj in towers)
             {
