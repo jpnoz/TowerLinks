@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DefaultTower : MonoBehaviour
 {
-    public int maxHealth = 200; // Maximum health of the tower
-    private int currentHealth; // Current health of the tower
+    public int maxHealth = 200; 
+    private int currentHealth; 
 
     private void Start()
     {

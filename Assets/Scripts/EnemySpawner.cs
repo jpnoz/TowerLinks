@@ -44,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
         if (capsuleCollider == null)
         {
             capsuleCollider = newEnemy.AddComponent<CapsuleCollider>();
-            capsuleCollider.isTrigger = true; // 
+            capsuleCollider.isTrigger = true; 
         }
         else
         {

@@ -15,7 +15,7 @@ public class ProjectileDamage : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the projectile collides with the tower
-        if (other.CompareTag("DefaultTower"))
+        if (other.CompareTag("Tower"))
         {
             TowerHealth towerHealth = other.GetComponent<TowerHealth>(); // Get the TowerHealth component
 

@@ -13,7 +13,7 @@ public class EnemyLaunchProjectile : MonoBehaviour
 
     private void Start()
     {
-        target = GameObject.FindGameObjectWithTag("DefaultTower")?.transform; // Find the tower's transform
+        target = GameObject.FindGameObjectWithTag("Tower")?.transform; // Find the tower's transform
     }
 
     private void Update()
