@@ -8,10 +8,17 @@ public class TowerTile : MonoBehaviour
     public bool hasTower = false;
     GameObject placedTower;
 
+    void Update()
+    {
+        if (placedTower == null)
+        {
+            hasTower = false;
+        }
+    }
+
     public void PlaceTower(GameObject towerToPlace)
     {
-        placedTower = towerToPlace;
         hasTower = true;
-        GameObject.Instantiate(placedTower, towerSocket.position, Quaternion.identity);
+        placedTower = GameObject.Instantiate(towerToPlace, towerSocket.position, Quaternion.identity);
     }
 }

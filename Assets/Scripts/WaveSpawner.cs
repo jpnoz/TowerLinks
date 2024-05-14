@@ -1,29 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Transform enemyPrefab;
+    public int[] spawnCounts;
+    public float[] spawnTimes;
+    public int[] spawnHealthBoosts;
+    public int currentWave = -1;
 
-    public float timeBetweenWaves = 5f;
+    public delegate void WaveStarted(int spawnCount, float spawnTime, int spawnHealthBoost);
+    public static event WaveStarted OnNewWave;
 
-    private float countdown = 2f;
-
-    void Update()
+    public void StartWave ()
     {
-       if(countdown  <= 0f)
-        {
-            SpawnWave();
-            countdown = timeBetweenWaves;
-        }
-
-        countdown -= Time.deltaTime;
-    }
-
-    void SpawnWave ()
-    {
-        Debug.Log("Wave incoming!");
+        currentWave++;
+        OnNewWave?.Invoke(spawnCounts[currentWave], spawnTimes[currentWave], spawnHealthBoosts[currentWave]);
     }
 }

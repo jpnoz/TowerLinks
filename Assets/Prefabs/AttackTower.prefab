@@ -1039,7 +1039,7 @@ MonoBehaviour:
   towerHead: {fileID: 5249265256703533882}
   launchOrigin: {fileID: 5917121645251283047}
   launchVelocity: 1000
-  range: 10
+  range: 4
   fireCooldown: 0.2
   attackDamage: 20
   targetTag: Enemy

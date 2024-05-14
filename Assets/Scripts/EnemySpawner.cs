@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [SelectionBase]
@@ -8,8 +6,23 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyToSpawn;
     public float spawnTime = 3.0f;
     public int spawnCount = 1;
+    int spawnHealthBoost = 0;
     float currentSpawnTime;
     int currentSpawnCount;
+    bool isWaveActive = false;
+
+    public delegate void FinishedSpawning();
+    public static event FinishedSpawning OnFinishedSpawning;
+
+    private void OnEnable()
+    {
+        WaveSpawner.OnNewWave += StartWave;
+    }
+
+    private void OnDisable()
+    {
+        WaveSpawner.OnNewWave -= StartWave;
+    }
 
 
     void Start()
@@ -18,12 +31,28 @@ public class EnemySpawner : MonoBehaviour
         currentSpawnCount = spawnCount;
     }
 
+    void StartWave(int spawnCount, float spawnTime, int spawnHealthBoost)
+    {
+        this.spawnCount = spawnCount;
+        this.spawnTime = spawnTime;
+        this.spawnHealthBoost = spawnHealthBoost;
+
+        currentSpawnCount = spawnCount;
+
+        isWaveActive = true;
+    }
 
     void Update()
     {
-        if (currentSpawnCount == 0)
+        if (!isWaveActive)
         {
             return;
+        }
+
+        if (currentSpawnCount <= 0)
+        {
+            isWaveActive = false;
+            OnFinishedSpawning?.Invoke();
         }
 
         currentSpawnTime -= Time.deltaTime;
@@ -55,8 +84,10 @@ public class EnemySpawner : MonoBehaviour
         CapsuleHealth capsuleHealth = newEnemy.GetComponent<CapsuleHealth>();
         if (capsuleHealth == null)
         {
-            
+
             capsuleHealth = newEnemy.AddComponent<CapsuleHealth>();
         }
+
+        capsuleHealth.maxHealth += spawnHealthBoost;
     }
 }

@@ -7,6 +7,14 @@ public class Laser : MonoBehaviour
     public string targetTag = "Enemy";
     public int damage = 25; // Amount of damage the cannonball deals
 
+    private void Update()
+    {
+        if (transform.position.y < -10)
+        {
+            DestroyImmediate(gameObject);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Check if the cannonball collides with a capsule
