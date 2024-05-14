@@ -9,7 +9,8 @@ public class TowerAttack : MonoBehaviour
     public Transform launchOrigin;
     public float launchVelocity = 100f; 
     public float range = 10f; 
-    public float fireCooldown = 0.2f; 
+    public float fireCooldown = 0.2f;
+    public int attackDamage = 20;
     private float cooldownTimer = 0.0f; 
     [SerializeField] private string targetTag = "Enemy"; 
 
@@ -69,6 +70,7 @@ public class TowerAttack : MonoBehaviour
 
         // Instantiate the projectile at the tower's position with tower's rotation
         GameObject newProjectile = Instantiate(projectile, launchOrigin.position, towerHead.rotation);
+        newProjectile.GetComponent<Laser>().damage = attackDamage;
 
         // Add force to the projectile in the adjusted direction
         newProjectile.GetComponent<Rigidbody>().AddForce(directionToTarget * launchVelocity);

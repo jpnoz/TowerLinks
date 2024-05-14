@@ -987,8 +987,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMaxHealth: 200
   baseFireRate: 1
-  baseAttackDamage: 50
+  baseFireValue: 50
   baseTargetPriority: 1
+  currentMaxHealth: 0
+  currentFireRate: 0
+  currentFireValue: 0
+  currentTargetPriority: 0
 --- !u!114 &3036903825072983083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbb20c91de7d48aa90007be63e70ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 200
+  maxHealth: 200
 --- !u!114 &6540486252912678129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,6 +1040,7 @@ MonoBehaviour:
   launchVelocity: 1000
   range: 10
   fireCooldown: 0.2
+  attackDamage: 20
   targetTag: Enemy
 --- !u!1 &7589452717386130053
 GameObject:

@@ -66,6 +66,19 @@ public class TowerData : MonoBehaviour
             }
 
             towerAttack.fireCooldown = 1.0f / towerStats.currentFireRate;
+            towerAttack.attackDamage = towerStats.currentFireValue;
+        }
+
+        if (towerType == TowerType.HealingTower)
+        {
+            HealingTower towerHealing = GetComponent<HealingTower>();
+            if (!towerHealing)
+            {
+                return;
+            }
+
+            towerHealing.healInterval = 1.0f / towerStats.currentFireRate;
+            towerHealing.healAmount = towerStats.currentFireValue;
         }
     }
 }
