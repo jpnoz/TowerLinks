@@ -184,11 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445474b3eabd62b448ab04981bcb51ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   maxHealth: 240
-=======
-  maxHealth: 1000
->>>>>>> e49bb93 (Updated Laser color and enemy launch origin)
 --- !u!1001 &1867719006799209167
 PrefabInstance:
   m_ObjectHideFlags: 0
