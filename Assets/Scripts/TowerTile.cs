@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class TowerTile : MonoBehaviour
@@ -8,15 +9,10 @@ public class TowerTile : MonoBehaviour
     public bool hasTower = false;
     GameObject placedTower;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlaceTower(GameObject towerToPlace)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        placedTower = towerToPlace;
+        hasTower = true;
+        GameObject.Instantiate(placedTower, towerSocket.position, Quaternion.identity);
     }
 }

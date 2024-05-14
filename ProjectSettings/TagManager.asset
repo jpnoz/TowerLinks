@@ -4,14 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Target
   - Enemy
   - Tower
+  - TurretPlaceable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - TurretPlaceable
   - Water
   - UI
   - 

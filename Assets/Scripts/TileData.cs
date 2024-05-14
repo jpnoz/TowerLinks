@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public enum TileMoveDirection
@@ -72,6 +67,7 @@ public class TileData : MonoBehaviour
     {
         // If enemies can walk on the tile,
         // get the next tile in the path through a raycast
+        nextTile = null;
         if (tileType == TileType.EnemySpawn || tileType == TileType.EnemyWalkable)
         {
             RaycastHit hit;
@@ -106,9 +102,13 @@ public class TileData : MonoBehaviour
         }
 
         // Set child Prefab to match currently set Tile Type
+        // Delete Duplicate Tile Prefabs
         if (transform.childCount > 0)
         {
-            BoardCleanup.DestroyOnUpdate.Add(transform.GetChild(0).gameObject);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                BoardCleanup.DestroyOnUpdate.Add(transform.GetChild(i).gameObject);
+            }
         }
 
         GameObject newTilePrefab = boardGenerator.baseTilePrefab;
@@ -165,7 +165,11 @@ public class TileData : MonoBehaviour
                 ClearTileDataScripts();
                 break;
             case TileType.EnemyGoal:
-                ClearTileDataScripts();
+                if (!GetComponent<EnemyGoal>())
+                {
+                    ClearTileDataScripts();
+                    gameObject.AddComponent<EnemyGoal>();
+                }
                 break;
         }
     }
@@ -173,10 +177,16 @@ public class TileData : MonoBehaviour
     void ClearTileDataScripts()
     {
         EnemySpawner enemySpawnerData = GetComponent<EnemySpawner>();
+        EnemyGoal enemyGoalData = GetComponent<EnemyGoal>();
 
         if (enemySpawnerData)
         {
             DestroyImmediate(enemySpawnerData);
+        }
+
+        if (enemyGoalData)
+        {
+            DestroyImmediate(enemyGoalData);
         }
     }
 }

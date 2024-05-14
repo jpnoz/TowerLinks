@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5472110805750632140}
   - component: {fileID: 2335226607741589720}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TurretPlaceableTile
-  m_TagString: Untagged
+  m_TagString: TurretPlaceable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,7 +57,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5588719453652045487}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tower Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 3610866731804968847}
   - component: {fileID: 886061694740889736}
   - component: {fileID: 7300514262058319504}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

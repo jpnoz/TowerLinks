@@ -61,7 +61,7 @@ public class TowerAttack : MonoBehaviour
 
         // Calculate the direction towards the target
         Vector3 directionToTarget = (target.position - towerHead.position);
-        directionToTarget.y -= aimVerticalOffset;
+        directionToTarget.y -= aimVerticalOffset / 2.0f;
         directionToTarget.Normalize();
 
         // Rotate the tower's launch origin to face towards the target
