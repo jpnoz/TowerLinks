@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class TowerHealth : MonoBehaviour
 {
-    public int startingHealth = 200; // Starting health of the tower
+    public int maxHealth = 200; // Starting health of the tower
     private int currentHealth; // Current health of the tower
 
     private void Start()
     {
-        currentHealth = startingHealth; // Initialize current health to starting health
+        currentHealth = maxHealth; // Initialize current health to starting health
     }
 
     // Property to expose currentHealth for external access
@@ -33,7 +33,7 @@ public class TowerHealth : MonoBehaviour
     {
         int healAmount = Mathf.CeilToInt(amount); // Round up 'amount' to the nearest integer
         currentHealth += healAmount; // Add the rounded heal amount to current health
-        currentHealth = Mathf.Min(currentHealth, startingHealth); // Clamp current health to starting health
+        currentHealth = Mathf.Min(currentHealth, maxHealth); // Clamp current health to starting health
         Debug.Log($"Default Tower healed for {healAmount}. Current health: {currentHealth}");
     }
 

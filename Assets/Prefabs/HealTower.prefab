@@ -192,7 +192,7 @@ MonoBehaviour:
   towerType: 1
   maxConnections: 3
   connectedTowers: []
-  towerStats: {fileID: 0}
+  towerStats: {fileID: 4042817641389804246}
 --- !u!114 &3530089441874667287
 MonoBehaviour:
   m_ObjectHideFlags: 0

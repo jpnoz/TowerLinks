@@ -40,15 +40,15 @@ public struct StatBoost
 
 public class TowerStats : MonoBehaviour
 {
-    public int baseMaxHealth = 200;
-    public float baseFireRate = 1.0f;
-    public float baseAttackDamage = 50.0f;
-    public int baseTargetPriority = 1;
+    [SerializeField] int baseMaxHealth = 200;
+    [SerializeField] float baseFireRate = 1.0f;
+    [SerializeField] float baseAttackDamage = 50.0f;
+    [SerializeField] int baseTargetPriority = 1;
 
-    int currentMaxHealth;
-    float currentFireRate;
-    float currentAttackDamage;
-    int currentTargetPriority;
+    public int currentMaxHealth;
+    public float currentFireRate;
+    public float currentAttackDamage;
+    public int currentTargetPriority;
 
     // Start is called before the first frame update
     void Start()

@@ -23,6 +23,8 @@ public class TowerData : MonoBehaviour
     {
         connectedTowers = new List<TowerData>();
         towerStats = GetComponent<TowerStats>();
+
+        transmitStats();
     }
 
     // Update is called once per frame
@@ -42,5 +44,28 @@ public class TowerData : MonoBehaviour
         }
 
         towerStats.applyStatBoost(currentStatBoost);
+        transmitStats();
+    }
+
+    void transmitStats()
+    {
+        TowerHealth towerHealth = GetComponent<TowerHealth>(); 
+        if (!towerHealth)
+        {
+            return;
+        }
+
+        towerHealth.maxHealth = towerStats.currentMaxHealth;
+
+        if (towerType == TowerType.AttackTower)
+        {
+            TowerAttack towerAttack = GetComponent<TowerAttack>();
+            if (!towerAttack)
+            {
+                return;
+            }
+
+            towerAttack.fireCooldown = 1.0f / towerStats.currentFireRate;
+        }
     }
 }
