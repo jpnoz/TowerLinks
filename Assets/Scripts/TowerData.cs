@@ -23,14 +23,12 @@ public class TowerData : MonoBehaviour
     {
         connectedTowers = new List<TowerData>();
         towerStats = GetComponent<TowerStats>();
-
-        transmitStats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transmitStats();
     }
 
     public void ConnectTower(TowerData connectingTowerData)
