@@ -1,9 +1,13 @@
 using UnityEngine;
+using static TowerHealth;
 
 public class TowerHealth : MonoBehaviour
 {
     public int maxHealth = 200; // Starting health of the tower
     private int currentHealth; // Current health of the tower
+
+    public delegate void TowerDestroyed();
+    public static event TowerDestroyed OnTowerDestroyed;
 
     private void Start()
     {
@@ -42,5 +46,6 @@ public class TowerHealth : MonoBehaviour
     {
         Debug.Log("Default Tower Destroyed");
         Destroy(gameObject); // Destroy the tower GameObject
+        OnTowerDestroyed?.Invoke();
     }
 }

@@ -1006,9 +1006,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: 0
+  connectionLineRenderer: {fileID: 5201168181442787567, guid: 956f7528b7dcb164ba339316cdb398c8, type: 3}
+  towerStats: {fileID: 0}
   maxConnections: 3
   connectedTowers: []
-  towerStats: {fileID: 0}
 --- !u!114 &7231487677053133661
 MonoBehaviour:
   m_ObjectHideFlags: 0

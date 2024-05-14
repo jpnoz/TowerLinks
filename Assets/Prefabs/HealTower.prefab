@@ -5007,11 +5007,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMaxHealth: 200
   baseFireRate: 1
-  baseAttackDamage: 50
+  baseFireValue: 50
   baseTargetPriority: 1
   currentMaxHealth: 0
   currentFireRate: 0
-  currentAttackDamage: 0
+  currentFireValue: 0
   currentTargetPriority: 0
 --- !u!114 &2618119676206615636
 MonoBehaviour:
@@ -5026,9 +5026,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: 1
+  connectionLineRenderer: {fileID: 5201168181442787567, guid: 956f7528b7dcb164ba339316cdb398c8, type: 3}
+  towerStats: {fileID: 0}
   maxConnections: 3
   connectedTowers: []
-  towerStats: {fileID: 0}
 --- !u!114 &3530089441874667287
 MonoBehaviour:
   m_ObjectHideFlags: 0

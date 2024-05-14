@@ -148,8 +148,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMaxHealth: 200
   baseFireRate: 1
-  baseAttackDamage: 50
+  baseFireValue: 50
   baseTargetPriority: 1
+  currentMaxHealth: 0
+  currentFireRate: 0
+  currentFireValue: 0
+  currentTargetPriority: 0
 --- !u!114 &28560390099167441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,9 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: 2
+  connectionLineRenderer: {fileID: 5201168181442787567, guid: 956f7528b7dcb164ba339316cdb398c8, type: 3}
+  towerStats: {fileID: 0}
   maxConnections: 3
   connectedTowers: []
-  towerStats: {fileID: 0}
 --- !u!114 &1879331243478550239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbb20c91de7d48aa90007be63e70ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 200
+  maxHealth: 200
 --- !u!1 &2659051601771029016
 GameObject:
   m_ObjectHideFlags: 0
