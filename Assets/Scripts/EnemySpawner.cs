@@ -6,7 +6,6 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyToSpawn;
     public float spawnTime = 3.0f;
     public int spawnCount = 1;
-    int spawnHealthBoost = 0;
     float currentSpawnTime;
     int currentSpawnCount;
     bool isWaveActive = false;
@@ -35,7 +34,6 @@ public class EnemySpawner : MonoBehaviour
     {
         this.spawnCount = spawnCount;
         this.spawnTime = spawnTime;
-        this.spawnHealthBoost = spawnHealthBoost;
 
         currentSpawnCount = spawnCount;
 
@@ -69,25 +67,6 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject newEnemy = Instantiate(enemyToSpawn, transform.position + Vector3.up * 0.501f, transform.GetChild(0).rotation);
 
-        CapsuleCollider capsuleCollider = newEnemy.GetComponent<CapsuleCollider>();
-        if (capsuleCollider == null)
-        {
-            capsuleCollider = newEnemy.AddComponent<CapsuleCollider>();
-            capsuleCollider.isTrigger = true; 
-        }
-        else
-        {
-            capsuleCollider.isTrigger = true;
-        }
-
-
-        CapsuleHealth capsuleHealth = newEnemy.GetComponent<CapsuleHealth>();
-        if (capsuleHealth == null)
-        {
-
-            capsuleHealth = newEnemy.AddComponent<CapsuleHealth>();
-        }
-
-        capsuleHealth.maxHealth += spawnHealthBoost;
+        
     }
 }
